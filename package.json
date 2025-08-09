@@ -1,0 +1,23 @@
+{
+  "name": "hashset javascript",
+  "version": "0.0.30",
+  "description": "A hashset implementation in javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
+    "test:watch": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
+    "test:coverage": "node --experimental-vm-modules ./node_modules/.bin/jest --coverage"
+  },
+  "type": "module",
+  "keywords": [
+    "hashset",
+    "javascript",
+    "jest"
+  ],
+  "author": "voiceinthedark",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.5"
+  }
+}
