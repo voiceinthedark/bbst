@@ -1,7 +1,7 @@
 {
-  "name": "hashset javascript",
-  "version": "0.0.30",
-  "description": "A hashset implementation in javascript",
+  "name": "BST",
+  "version": "0.0.05",
+  "description": "A binary search tree implementation in javascript",
   "main": "index.js",
   "scripts": {
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
@@ -10,7 +10,9 @@
   },
   "type": "module",
   "keywords": [
-    "hashset",
+    "bst",
+    "binary-search-tree",
+    "balanced-binary-search-tree",
     "javascript",
     "jest"
   ],

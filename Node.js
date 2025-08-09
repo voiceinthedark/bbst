@@ -2,41 +2,23 @@
 
 /**
  * @class Node
- * @classdesc A node that holds data and pointer to next node
+ * @classdesc A node that holds data and pointer to left and right node
  * */
 class Node {
   /** @type {any} */
   #key
   /** @type {Node | null | undefined} */
-  #nextNode;
-  /** @type {number} */
-  #hashKey;
+  #left;
+  /** @type {Node | null} */
+  #right;
 
   /**@constructor
    * @param {any} key 
-   * @param {Node | null | undefined} next 
-   * @param {number} hash 
    * */
-  constructor(key, next, hash) {
+  constructor(key) {
     this.#key = key
-    this.#nextNode = next ?? null;
-    this.#hashKey = hash;
-  }
-
-  /**
-   * @method to set the hashKey of the node
-   * @param {number} val 
-   * */
-  set hashKey(val){
-    this.#hashKey = val
-  }
-
-  /**
-   * @method to get the hashkey of the node
-   * @returns {number}
-   * */
-  get hashKey(){
-    return this.#hashKey
+    this.#left = null
+    this.#right = null
   }
 
   /** @method to return the key of the node
@@ -47,19 +29,44 @@ class Node {
   }
 
   /**
-   * @method to get the next node
-   * @returns {Node | null | undefined }
+   * @method to set the key value
+   * @param {*} val 
    * */
-  get nextNode() {
-    return this.#nextNode
+  set key(val){
+    this.#key = val
   }
 
   /**
-   * @method to set the next node
-   * @param {Node | null |undefined} val 
+   * @method to return the left node
+   * @returns {Node | null | undefined}
    * */
-  set nextNode(val) {
-    this.#nextNode = val;
+  get left(){
+    return this.#left
+  }
+
+
+  /**
+   * @method to set the left Node
+   * @param {*} val 
+   * */
+  set left(val){
+    this.#left = val
+  }
+  
+  /**
+   * @method to get the right node
+   * @returns {Node | null | undefined} 
+   * */
+  get right(){
+    return this.#right
+  }
+
+  /**
+   * @method to set the right node value
+   * @param {*} val 
+   * */
+  set right(val){
+    this.#right = val
   }
 }
 
