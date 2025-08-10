@@ -96,7 +96,7 @@ class Tree {
     if (this.#root) {
       let r = this.#root
       while (r != null) {
-        if(value === r.key) return
+        if (value === r.key) return
         if (value > r.key) {
           // go right
           if (r.right) {
@@ -120,8 +120,104 @@ class Tree {
     }
   }
 
+  /**
+   * @method to search for a key in the tree
+   * @param {*} key 
+   * @returns {Node | null}
+   * */
+  search(key) {
+    return this.#searchRec(key, this.#root);
+  }
+
+  /**
+   * @method to search for a key recursively
+   * @param {*} key 
+   * @param {Node | null | undefined} root 
+   * */
+  #searchRec(key, root) {
+    let r = root;
+
+    if (r === null || r === undefined) return null;
+    if (key === r.key) return r
+    if (r.key > key)
+      return this.#searchRec(key, r.left)
+    if (r.key < key)
+      return this.#searchRec(key, r.right)
+  }
+
+  /**
+   * @method to delete a value from the tree
+   * @param {*} value 
+   * */
   delete(value) {
-    // TODO: implement delete method
+    this.#root = this.#deleteRec(this.#root, value);
+  }
+
+  /**
+   * @method helper to delete a value recursively
+   * @param {*} value 
+   * @param {Node | null | undefined} root 
+   * @returns {Node | null | undefined}
+   * */
+  #deleteRec(root, value) {
+    if (root === null || root === undefined) {
+      return null; // Node not found
+    }
+
+    if (value < root.key) {
+      root.left = this.#deleteRec(root?.left, value);
+      return root;
+    } else if (value > root.key) {
+      root.right = this.#deleteRec(root.right, value);
+      return root;
+    } else {
+      // Node found (root.key === value)
+
+      // Case 1: Node with no children or only one child
+      if (root.left === null) {
+        return root.right; // Replace node with its right child (could be null)
+      } else if (root.right === null) {
+        return root.left; // Replace node with its left child
+      }
+
+      // Case 2: Node with two children
+      // Find the in-order successor (smallest in the right subtree)
+      let temp = root.right;
+      while (temp?.left !== null) {
+        temp = temp?.left;
+      }
+
+      // Copy the successor's content to this node
+      root.key = temp?.key;
+
+      // Delete the in-order successor from the right subtree
+      root.right = this.#deleteRec(root.right, temp?.key);
+      return root;
+    }
+  }
+
+  /**
+   * @method to traverse the array in BFS and apply a callback on each node
+   * @param {Function} callback 
+   * */
+  levelOrderForEach(callback) {
+    if(!callback || typeof callback !== 'function'){
+      throw new Error('callback should be a function')
+    }
+
+    let q = [] // assign a queue
+    let source = this.#root;
+    q.push(source) // add element to front
+    while(q){ // while q not empty
+      let r = q.shift();
+      if(!r || r === undefined)
+        break
+      callback(r);
+      if(r?.left)
+        q.push(r.left)
+      if(r?.right)
+        q.push(r.right)
+    }
   }
 }
 
