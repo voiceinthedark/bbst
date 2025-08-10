@@ -82,7 +82,7 @@ class Tree {
    * */
   preorder(root, arr) {
     let array = arr
-    if (root === null) return 
+    if (root === null) return
     array.push(root?.key)
     this.preorder(root?.left, array)
     this.preorder(root?.right, array)
@@ -92,13 +92,35 @@ class Tree {
    * @method to insert a value into the bst
    * @param {*} value 
    * */
-  insert(value){
-   // TODO: implement inset method 
-    // Items are inserted into the leaf node always
-
+  insert(value) {
+    if (this.#root) {
+      let r = this.#root
+      while (r != null) {
+        if(value === r.key) return
+        if (value > r.key) {
+          // go right
+          if (r.right) {
+            r = r.right
+          }
+          else {
+            r.right = new Node(value)
+            return;
+          }
+        }
+        if (value < r.key) {
+          // go left
+          if (r.left)
+            r = r.left
+          else {
+            r.left = new Node(value)
+            return;
+          }
+        }
+      }
+    }
   }
 
-  delete(value){
+  delete(value) {
     // TODO: implement delete method
   }
 }

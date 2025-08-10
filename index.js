@@ -6,3 +6,13 @@ console.log(t.prettyPrint(t.root))
 let arr = []
 t.preorder(t.root, arr)
 console.log(arr)
+
+arr = []
+t.insert(55)
+t.insert(4)
+t.preorder(t.root, arr)
+console.log(arr)
+arr = []
+t.insert(2)
+t.preorder(t.root, arr)
+console.log(arr)
