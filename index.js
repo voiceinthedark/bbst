@@ -6,5 +6,9 @@ t.levelOrderForEach((node) => {
  console.log(` ${node.key} `)
 })
 
+console.log('inorder traversal:')
 t.inorderForEach((node) => console.log(node.key))
-
+console.log('preoder traversal:')
+t.preorderForEach((node) => console.log(node.key))
+console.log('post order traversal:')
+t.postorderForEach((node) => console.log(node.key))

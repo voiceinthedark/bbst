@@ -250,7 +250,27 @@ class Tree {
    * @param {Function} callback 
    * */
   preorderForEach(callback) {
+    if(typeof callback !== 'function')
+      throw new Error('only a function is acceptable as callback')
+    let r = this.#root
+    if(!r)
+      return
+    callback(r)
+    this.#preorderRec(r?.left, callback)
+    this.#preorderRec(r?.right, callback)
+  }
 
+  /**
+   * @method helper to traverse the tree in preorder and apply callback on each node
+   * @param {Node|null|undefined} root 
+   * @param {Function} func 
+   * */
+  #preorderRec(root, func){
+    func(root)
+    if(root?.left)
+      this.#preorderRec(root.left, func)
+    if(root?.right)
+      this.#preorderRec(root.right, func)
   }
 
   /**
@@ -258,7 +278,27 @@ class Tree {
    * @param {Function} callback 
    * */
   postorderForEach(callback) {
+    if(typeof callback !== 'function')
+      throw new Error('only a function is acceptable as callback')
+    let r = this.#root
+    if(!r)
+      return
+    this.#postorderRec(r.left, callback)
+    this.#postorderRec(r.right, callback)
+    callback(r)
+  }
 
+  /**
+   * @method helper for the post order traversal
+   * @param {Node| null| undefined} root 
+   * @param {Function} func 
+   * */
+  #postorderRec(root, func){
+    if(root?.left)
+      this.#postorderRec(root.left, func)
+    if(root?.right)
+      this.#postorderRec(root.right, func)
+    func(root)
   }
 }
 
