@@ -35,7 +35,7 @@ class Tree {
    * @returns {Node | null}
    * */
   buildTree(array) {
-    let copy = array.sort()
+    let copy = array.sort((a, b) => a - b)
     let sanitized = Array.from(new Set(copy));
 
     return this.#bst(sanitized, 0, sanitized.length - 1)
@@ -197,27 +197,68 @@ class Tree {
   }
 
   /**
-   * @method to traverse the array in BFS and apply a callback on each node
+   * @method to traverse the tree in BFS and apply a callback on each node
    * @param {Function} callback 
    * */
   levelOrderForEach(callback) {
-    if(!callback || typeof callback !== 'function'){
+    if (!callback || typeof callback !== 'function') {
       throw new Error('callback should be a function')
     }
 
     let q = [] // assign a queue
     let source = this.#root;
     q.push(source) // add element to front
-    while(q){ // while q not empty
+    while (q) { // while q not empty
       let r = q.shift();
-      if(!r || r === undefined)
+      if (!r || r === undefined)
         break
       callback(r);
-      if(r?.left)
+      if (r?.left)
         q.push(r.left)
-      if(r?.right)
+      if (r?.right)
         q.push(r.right)
     }
+  }
+
+  /**
+   * @method to traverse the tree inorder and apply callback on each node
+   * @param {Function} callback 
+   * */
+  inorderForEach(callback) {
+    let r = this.#root
+    if (!r) return
+    this.#inorderRec(r.left, callback)
+    callback(r)
+    this.#inorderRec(r.right, callback);
+  }
+
+  /**
+   * @method helper in order method
+   * @param {Node | null | undefined} root 
+   * @param {Function} func 
+   * */
+  #inorderRec(root, func) {
+    if(root?.left)
+      this.#inorderRec(root.left, func)
+    func(root)
+    if(root?.right)
+      this.#inorderRec(root.right, func)
+  }
+
+  /**
+   * @method to traverse the tree in preorder and apply callback on each node
+   * @param {Function} callback 
+   * */
+  preorderForEach(callback) {
+
+  }
+
+  /**
+   * @method to traverse the tree in post order and apply a callback to each node
+   * @param {Function} callback 
+   * */
+  postorderForEach(callback) {
+
   }
 }
 
