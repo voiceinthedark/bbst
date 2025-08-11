@@ -6,20 +6,14 @@ t.levelOrderForEach((node) => {
  console.log(` ${node.key} `)
 })
 
-console.log('inorder traversal:')
-t.inorderForEach((node) => console.log(node.key))
-console.log('preoder traversal:')
-t.preorderForEach((node) => console.log(node.key))
-console.log('post order traversal:')
-t.postorderForEach((node) => console.log(node.key))
-
-console.log(`depth of 8: ${t.depth(8)}`)
-console.log(`depth of 6345: ${t.depth(6345)}`)
-console.log(`depth of 23: ${t.depth(23)}`)
-console.log(`depth of 9: ${t.depth(9)}`) // 2
-
-console.log(`height of 9: ${t.height(9)}`) // 1
-console.log(`height of 8: ${t.height(8)}`) // 3
-console.log(`height of 6345: ${t.height(6345)}`) // 0
-
-console.log(t.isBalanced())
+let newt = new Tree([3, 1, 8, 445, 112, 55, 99, 121])
+newt.prettyPrint()
+console.log(`balanced: ${newt.isBalanced()}`)
+newt.insert(54)
+newt.insert(32)
+newt.insert(77)
+newt.prettyPrint()
+console.log(`balanced: ${newt.isBalanced()}`)
+newt.rebalance()
+newt.prettyPrint()
+console.log(`balanced: ${newt.isBalanced()}`)

@@ -58,12 +58,12 @@ class Tree {
 
   /**
    * @method prettyPrint to print the bst
-   * @param {Node} node 
+   * @param {Node | null | undefined} [node=this.#root] 
    * @param {string} [prefix=''] 
    * @param {boolean} [isLeft=true] 
    * */
-  prettyPrint(node, prefix = '', isLeft = true) {
-    if (node === null) {
+  prettyPrint(node = this.#root, prefix = '', isLeft = true) {
+    if (node === null || node === undefined) {
       return;
     }
     if (node.right !== null && node.right !== undefined) {
@@ -415,6 +415,20 @@ class Tree {
 
     // The height of the current node is 1 plus the maximum of its children's heights
     return leftHeight - rightHeight
+  }
+
+  /**
+   * @method to rebalance an unbalanced tree
+   * */
+  rebalance(){
+    if(this.isBalanced()) return
+  // travel inorder and collect the array
+    let arr = []
+    this.inorderForEach((node) => {
+      arr.push(node.key)
+    })
+    // rebuild tree from array
+    this.#root = this.buildTree(arr)
   }
 }
 
