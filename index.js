@@ -21,3 +21,5 @@ console.log(`depth of 9: ${t.depth(9)}`) // 2
 console.log(`height of 9: ${t.height(9)}`) // 1
 console.log(`height of 8: ${t.height(8)}`) // 3
 console.log(`height of 6345: ${t.height(6345)}`) // 0
+
+console.log(t.isBalanced())

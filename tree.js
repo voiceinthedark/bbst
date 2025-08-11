@@ -238,6 +238,8 @@ class Tree {
    * @param {Function} func 
    * */
   #inorderRec(root, func) {
+    if (root === null || root === undefined)
+      return
     if (root?.left)
       this.#inorderRec(root.left, func)
     func(root)
@@ -266,6 +268,9 @@ class Tree {
    * @param {Function} func 
    * */
   #preorderRec(root, func) {
+    if (root === null || root === undefined) {
+      return; // Base case: stop if the node is null
+    }
     func(root)
     if (root?.left)
       this.#preorderRec(root.left, func)
@@ -294,6 +299,9 @@ class Tree {
    * @param {Function} func 
    * */
   #postorderRec(root, func) {
+    if (root === null || root === undefined) {
+      return; // Base case: stop if the node is null
+    }
     if (root?.left)
       this.#postorderRec(root.left, func)
     if (root?.right)
@@ -371,6 +379,42 @@ class Tree {
 
     // The height of the current node is 1 plus the maximum of its children's heights
     return 1 + Math.max(leftHeight, rightHeight);
+  }
+
+  /**
+   * @method to check if the tree is balanced
+   * @returns {boolean}
+   * */
+  isBalanced() {
+    // Check every node if the height difference between its left and right subtree is not bigger than 1
+    // use levelorder traversal to check each node
+
+    let arr = []
+    this.levelOrderForEach((node) => {
+      arr.push(this.#checkHeight(node))
+    })
+    return arr.every((e) => {
+      return e <= 1 && e >= -1 
+    })
+  }
+
+  /**
+   * @method to check the height difference between the left and right subtrees of a node
+   * @param {Node} node 
+   * @returns {number}
+   * */
+  #checkHeight(node) {
+    // Base case: If the node is null, its height is -1.
+    if (node === null || node === undefined) {
+      return -1;
+    }
+
+    // Recursively calculate the height of the left and right subtrees
+    const leftHeight = this.#calculateNodeHeight(node.left);
+    const rightHeight = this.#calculateNodeHeight(node.right);
+
+    // The height of the current node is 1 plus the maximum of its children's heights
+    return leftHeight - rightHeight
   }
 }
 
