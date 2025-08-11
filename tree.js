@@ -9,7 +9,7 @@ import Node from "./Node.js";
 class Tree {
   /** @type {Array} */
   #array;
-  /** @type {Node | null} */
+  /** @type {Node | null | undefined} */
   #root;
 
   /**
@@ -238,10 +238,10 @@ class Tree {
    * @param {Function} func 
    * */
   #inorderRec(root, func) {
-    if(root?.left)
+    if (root?.left)
       this.#inorderRec(root.left, func)
     func(root)
-    if(root?.right)
+    if (root?.right)
       this.#inorderRec(root.right, func)
   }
 
@@ -250,10 +250,10 @@ class Tree {
    * @param {Function} callback 
    * */
   preorderForEach(callback) {
-    if(typeof callback !== 'function')
+    if (typeof callback !== 'function')
       throw new Error('only a function is acceptable as callback')
     let r = this.#root
-    if(!r)
+    if (!r)
       return
     callback(r)
     this.#preorderRec(r?.left, callback)
@@ -265,11 +265,11 @@ class Tree {
    * @param {Node|null|undefined} root 
    * @param {Function} func 
    * */
-  #preorderRec(root, func){
+  #preorderRec(root, func) {
     func(root)
-    if(root?.left)
+    if (root?.left)
       this.#preorderRec(root.left, func)
-    if(root?.right)
+    if (root?.right)
       this.#preorderRec(root.right, func)
   }
 
@@ -278,10 +278,10 @@ class Tree {
    * @param {Function} callback 
    * */
   postorderForEach(callback) {
-    if(typeof callback !== 'function')
+    if (typeof callback !== 'function')
       throw new Error('only a function is acceptable as callback')
     let r = this.#root
-    if(!r)
+    if (!r)
       return
     this.#postorderRec(r.left, callback)
     this.#postorderRec(r.right, callback)
@@ -293,12 +293,84 @@ class Tree {
    * @param {Node| null| undefined} root 
    * @param {Function} func 
    * */
-  #postorderRec(root, func){
-    if(root?.left)
+  #postorderRec(root, func) {
+    if (root?.left)
       this.#postorderRec(root.left, func)
-    if(root?.right)
+    if (root?.right)
       this.#postorderRec(root.right, func)
     func(root)
+  }
+
+  /**
+       * @method to return the depth of the value
+       * @param {*} value 
+       * @returns {number | null}
+       * */
+  depth(value) {
+    // Start the recursive search from the root with an initial depth of 0
+    return this.#getDepthRec(value, this.#root, 0);
+  }
+
+  /**
+   * @method helper to calculate the depth of a value recursively
+   * @param {*} value - The value whose depth we are trying to find.
+   * @param {Node | null | undefined} currentNode - The current node being visited in the traversal.
+   * @param {number} currentDepth - The depth of the currentNode from the original tree's root.
+   * @returns {number | null} The depth of the value if found, or null if not found.
+   * */
+  #getDepthRec(value, currentNode, currentDepth) {
+    // Base Case 1: If we've reached a null node, the value is not on this path.
+    if (currentNode === null || currentNode === undefined) {
+      return null; // Indicate that the value was not found
+    }
+
+    // Base Case 2: If the current node's key matches the value, we found it.
+    // The currentDepth is its depth from the tree's root.
+    if (value === currentNode.key) {
+      return currentDepth;
+    }
+
+    // Recursive Case: Value is in the left subtree
+    if (value < currentNode.key) {
+      return this.#getDepthRec(value, currentNode.left, currentDepth + 1);
+    }
+    // Recursive Case: Value is in the right subtree
+    else { // value > currentNode.key
+      return this.#getDepthRec(value, currentNode.right, currentDepth + 1);
+    }
+  }
+
+  /**
+     * @method to get the height of a value
+     * @param {*} value 
+     * @returns {number | null}
+     * */
+  height(value) {
+    const targetNode = this.search(value);
+    if (!targetNode) {
+      return null; // Value not found in the tree
+    }
+    return this.#calculateNodeHeight(targetNode);
+  }
+
+  /**
+   * @method helper to calculate the height of a given node (subtree)
+   * @param {Node | null | undefined} node 
+   * @returns {number}
+   * */
+  #calculateNodeHeight(node) {
+    // Base case: If the node is null, its height is -1.
+    // This allows a leaf node (with null children) to have a height of 0.
+    if (node === null || node === undefined) {
+      return -1;
+    }
+
+    // Recursively calculate the height of the left and right subtrees
+    const leftHeight = this.#calculateNodeHeight(node.left);
+    const rightHeight = this.#calculateNodeHeight(node.right);
+
+    // The height of the current node is 1 plus the maximum of its children's heights
+    return 1 + Math.max(leftHeight, rightHeight);
   }
 }
 

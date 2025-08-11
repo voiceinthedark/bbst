@@ -12,3 +12,12 @@ console.log('preoder traversal:')
 t.preorderForEach((node) => console.log(node.key))
 console.log('post order traversal:')
 t.postorderForEach((node) => console.log(node.key))
+
+console.log(`depth of 8: ${t.depth(8)}`)
+console.log(`depth of 6345: ${t.depth(6345)}`)
+console.log(`depth of 23: ${t.depth(23)}`)
+console.log(`depth of 9: ${t.depth(9)}`) // 2
+
+console.log(`height of 9: ${t.height(9)}`) // 1
+console.log(`height of 8: ${t.height(8)}`) // 3
+console.log(`height of 6345: ${t.height(6345)}`) // 0
